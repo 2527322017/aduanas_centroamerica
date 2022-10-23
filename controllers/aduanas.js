@@ -46,15 +46,23 @@ const aduanasPost = async(req, res = response) => {
 }
 
 const aduanasPut = async(req, res = response) => {
+    const today = new Date();
+
+    if(typeof req.body.fecha === "undefined") { //agregar fecha por defecto
+        req.body.fecha = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate() ;
+    }
+    if(typeof req.body.fecha_cierre === "undefined") { //agregar vacio por defecto en caso GT
+        req.body.fecha_cierre = '';
+    }
+    if(typeof req.body.pais_ejecuta === "undefined") { //agregar vacio por defecto en caso GT
+        req.body.pais_ejecuta = '';
+    }
+    if(typeof req.body.monto === "undefined") { //agregar vacio por defecto en caso CR
+        req.body.monto = 0;
+    }
 
     const { id } = req.params;
-    const { _id, codigo, nombreproyecto, monto, ...resto } = req.body;
-
-    /*if ( password ) {
-        // Encriptar la contraseña
-        const salt = bcryptjs.genSaltSync();
-        resto.password = bcryptjs.hashSync( password, salt );
-    } */
+    const { _id, ...resto } = req.body;
 
     const aduana = await Aduana.findByIdAndUpdate( id, resto );
 

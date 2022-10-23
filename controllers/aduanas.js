@@ -13,6 +13,8 @@ const aduanasGet = async(req = request, res = response) => {
     const aduanas = await Aduana.find(filter);
         res.json({
           msg:'Llamando el GET de mi API',
+          carnet:'25-2732-2017',
+          estudiante:'René Alberto Castaneda Reymundo',
           aduanas
       });
 }
@@ -41,6 +43,8 @@ const aduanasPost = async(req, res = response) => {
     await aduana.save();
 
     res.json({
+        carnet:'25-2732-2017',
+        estudiante:'René Alberto Castaneda Reymundo',
         aduana
     });
 }
@@ -66,7 +70,11 @@ const aduanasPut = async(req, res = response) => {
 
     const aduana = await Aduana.findByIdAndUpdate( id, resto );
     const aduanaUpdate = await Aduana.findById(id);
-    res.json(aduanaUpdate);
+    res.json({
+        carnet:'25-2732-2017',
+        estudiante:'René Alberto Castaneda Reymundo',
+        aduanaUpdate
+    });
 }
 
 
@@ -78,7 +86,10 @@ const aduanasDelete = async(req, res = response) => {
     const aduana = await Aduana.findByIdAndDelete(id);
 
 
-    res.json(aduana);
+    res.json({
+        carnet:'25-2732-2017',
+        estudiante:'René Alberto Castaneda Reymundo',
+        aduana});
 }
 
 const aduanasPatch = (req, res = response) => {

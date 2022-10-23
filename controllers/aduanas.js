@@ -65,8 +65,8 @@ const aduanasPut = async(req, res = response) => {
     const { _id, ...resto } = req.body;
 
     const aduana = await Aduana.findByIdAndUpdate( id, resto );
-
-    res.json(aduana);
+    const aduanaUpdate = await Aduana.findById(id);
+    res.json(aduanaUpdate);
 }
 
 

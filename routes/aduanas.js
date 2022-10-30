@@ -20,16 +20,16 @@ const { aduanasGet,
 const router = Router();
 
 /* ROUTER GUATEMALA */
-router.get('/', aduanasGet );
+router.get('/guatemala', aduanasGet );
 
-router.put('/:id',[
+router.put('/guatemala/:id',[
     check('id', 'No es un ID válido').isMongoId(),
     check('id').custom( existeAduanaPorId ),
     check('pais_ejecuta').custom( esPaisValido ), 
     validarCampos
 ],aduanasPut);
 
-router.post('/',[
+router.post('/guatemala',[
     check('nombreproyecto', 'El nombreproyecto es obligatorio').not().isEmpty(),
     check('codigo').custom( codigoExiste ),
     // check('pais_ejecuta', 'No es un rol válido').isIn(['GUATEMALA', 'EL SALVADOR', 'HONDURAS', 'COSTA RICA', 'NICARAGUA', 'PANAMA']),
@@ -37,13 +37,13 @@ router.post('/',[
     validarCampos
 ], aduanasPost );
 
-router.delete('/:id',[
+router.delete('/guatemala/:id',[
     check('id', 'No es un ID válido').isMongoId(),
     check('id').custom( existeAduanaPorId ),
     validarCampos
 ],aduanasDelete );
 
-router.patch('/', aduanasPatch);
+router.patch('/guatemala', aduanasPatch);
 
 /* ROUTER COSTA RICA */
 router.get('/costarica', aduanasGetCR );

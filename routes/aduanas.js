@@ -10,11 +10,16 @@ const { aduanasGet,
         aduanasPut,
         aduanasPost,
         aduanasDelete,
-        aduanasPatch} = require('../controllers/aduanas');
+        aduanasPatch,
+        aduanasGetCR,
+        aduanasPutCR,
+        aduanasPostCR,
+        aduanasDeleteCR,
+        aduanasPatchCR} = require('../controllers/aduanas');
 
 const router = Router();
 
-
+/* ROUTER GUATEMALA */
 router.get('/', aduanasGet );
 
 router.put('/:id',[
@@ -39,5 +44,31 @@ router.delete('/:id',[
 ],aduanasDelete );
 
 router.patch('/', aduanasPatch);
+
+/* ROUTER COSTA RICA */
+router.get('/costarica', aduanasGetCR );
+
+router.put('/costarica/:id',[
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom( existeAduanaPorId ),
+    check('pais_ejecuta').custom( esPaisValido ), 
+    validarCampos
+],aduanasPutCR);
+
+router.post('/costarica',[
+    check('nombreproyecto', 'El nombreproyecto es obligatorio').not().isEmpty(),
+    check('codigo').custom( codigoExiste ),
+    // check('pais_ejecuta', 'No es un rol válido').isIn(['GUATEMALA', 'EL SALVADOR', 'HONDURAS', 'COSTA RICA', 'NICARAGUA', 'PANAMA']),
+    check('pais_ejecuta').custom( esPaisValido ), 
+    validarCampos
+], aduanasPostCR );
+
+router.delete('/costarica/:id',[
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom( existeAduanaPorId ),
+    validarCampos
+],aduanasDeleteCR );
+
+router.patch('/', aduanasPatchCR);
 
 module.exports = router;
